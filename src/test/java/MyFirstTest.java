@@ -1,16 +1,34 @@
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class MyFirstTest {
+
+    private ArrayList<Device> devices;
+
+    //This runs before anything else
+    @Before
+    public void setUp(){
+        this.devices = new ArrayList<>();
+        this.devices.add( new Device ());
+        this.devices.add( new Device ("iPhone12ProMax"));
+        this.devices.add( null );
+    }
+
     @Test
     public void testIfCompanyNameIsEquals(){
         String expected = "Codeup";
-        String actual = "Codeup";
+        String actual = "CodeUp";
         //Manual Method
         //expected.equalsIgnoreCase(actual);
 
         //JUnit Method --> Assert
-        assertEquals(expected, actual);
+        //assertEquals(expected, actual);
+        assertNotEquals(expected, actual);
     }
 
     @Test
@@ -55,11 +73,31 @@ public class MyFirstTest {
     }
 
     @Test
+    public void testIfObjectsAreSame(){
+        List<String> languages = new ArrayList<>();
+        List<String> moreLanguages = new ArrayList<>();
+
+        assertNotSame(languages, moreLanguages);
+        //assertSame(languages, moreLanguages);
+    }
+
+    @Test
     public void testIfArrayEquals() {
         char[] expected = {'J','u','n','i','t'};
         char[] actual = "Junit".toCharArray();
         //This checks to see if the arrays are the same
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testIfArraysAreSame(){
+        int[] numbers = {1, 2, 3};
+        int[] otherNumbers = new int[3];
+        otherNumbers[0] = 1;
+        otherNumbers[1] = 2;
+        otherNumbers[2] = 3;
+
+        assertArrayEquals(numbers, otherNumbers);
     }
 
     @Test
@@ -73,23 +111,30 @@ public class MyFirstTest {
     }
 
     @Test
+    public void testIfStringContainsLetters(){
+        String language = "PHP";
+        assertTrue(language.contains("H"));
+        assertFalse(language.contains("J"));
+    }
+
+    @Test
     public void testIfInstanceIsNull() {
         //TDD: #1st Step
         //Do this 1st before you build an actual class
         //Think about happy path, then build up to it
-        Device phone = new Device ();
-        Device mac = null;
-        assertNull(null);
-        assertNotNull(phone);
+        //Device phone = new Device ();
+        //Device mac = null;
+        assertNull(this.devices.get(2));
+        assertNotNull(this.devices.get(0));
     }
 
     @Test
     public void testIfDeviceNameIsPossible(){
-        Device phone = new Device("iPhone12ProMax");
-        assertEquals("iPhone12ProMax", phone.getPhoneName());
-
-
+        //Device phone = new Device("iPhone12ProMax");
+        assertEquals("iPhone12ProMax", this.devices.get(1).getPhoneName());
     }
+
+
 
 
 }
